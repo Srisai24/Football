@@ -1,0 +1,89 @@
+var ground = createSprite(200,200);
+ ground.setAnimation("ground")
+var ball = createSprite(200,345,200,345)
+ball.shapeColor="red"
+
+var enemy1 = createSprite(200,250,10,10)
+
+
+var enemy2 = createSprite(200,150,10,10)
+
+
+var enemy3 = createSprite(200,50,10,10)
+
+
+var goal1 = createSprite(200,5,200,20)
+goal1.shapeColor="yellow"
+
+
+
+ball.setAnimation("hero");
+ball.scale=1;
+enemy1.setAnimation("hero1");
+enemy1.scale=.1;
+enemy2.setAnimation("hero1");
+enemy2.scale=.1;
+enemy3.setAnimation("hero1");
+enemy3.scale=.1;
+
+enemy1.setVelocity(-8,0);
+enemy2.setVelocity(8,0);
+enemy3.setVelocity(-8,0);
+
+
+function draw() {
+  
+    createcanvas(600,400)
+    
+background("white")
+var goal =0;
+var death =0
+createEdgeSprites()
+
+
+
+
+enemy1.bounceOff(edges)
+enemy2.bounceOff(edges)
+enemy3.bounceOff(edges)
+
+if(keyDown(UP_ARROW)){
+  ball.y=ball.y-3
+}
+
+if(keyDown(DOWN_ARROW)){
+  ball.y=ball.y+3
+}
+
+if(keyDown(LEFT_ARROW)){
+  ball.x=ball.x-3
+}
+
+if(keyDown(RIGHT_ARROW)){
+  ball.x=ball.x+3
+}
+
+if(ball.isTouching(enemy1)||ball.isTouching(enemy2)||ball.isTouching(enemy3)){
+  playSound("sound://category_achievements/bubbly_game_achievement_sound.mp3")
+  ball.x=200
+  ball.y=350
+  death=death+1
+}
+    
+if(ball.isTouching(goal1)){    
+  playSound("sound://category_achievements/vibrant_game_game_gold_tresure_chest_open.mp3")
+  ball.x=200
+  ball.y=345
+  goal=goal+1
+}
+textSize(20)
+  fill("blue")
+  text("Goals-"+goal,320,350);
+  
+
+textSize(20)
+  fill("blue")
+  text("death-"+death,20,310);
+  
+drawSprites()
+}
